@@ -1,7 +1,9 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.EmulatorConfig;
 import io.appium.java_client.android.AndroidDriver;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -13,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EmulatorMobileDriver implements WebDriverProvider {
 
+    static EmulatorConfig config = ConfigFactory.create(EmulatorConfig.class);
 
     public static URL getAppiumServerUrl() {
         try {
-            return new URL("http://127.0.0.1:4723/wd/hub");
+            return new URL(config.url());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

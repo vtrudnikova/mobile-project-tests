@@ -1,7 +1,10 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.BrowserstackConfig;
+import config.RealConfig;
 import io.appium.java_client.android.AndroidDriver;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -12,11 +15,12 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RealMobileDriver implements WebDriverProvider {
-
+    static RealConfig config = ConfigFactory.create(RealConfig.class);
 
     public static URL getAppiumServerUrl() {
         try {
-            return new URL("http://127.0.0.1:4723/wd/hub");
+            System.err.println(config.url() + "iuyiuy");
+            return new URL(config.url());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

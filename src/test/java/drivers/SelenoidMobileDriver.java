@@ -1,7 +1,10 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.RealConfig;
+import config.SelenideConfig;
 import io.appium.java_client.android.AndroidDriver;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -13,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelenoidMobileDriver implements WebDriverProvider {
 
-
+    static SelenideConfig config = ConfigFactory.create(SelenideConfig.class);
     public static URL getAppiumServerUrl() {
         try {
-            return new URL("https://user1:1234@selenoid.autotests.cloud:4444/wd/hub");
+            return new URL(config.url());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +45,7 @@ public class SelenoidMobileDriver implements WebDriverProvider {
 
     private URL apkUrl() {
         try {
-            return new URL("https://github.com/wikimedia/apps-android-wikipedia/releases/download/latest/app-alpha-universal-release.apk");
+            return new URL(config.apkUrl());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -40,9 +40,9 @@ public class Attach {
     private static String getVideoUrl(String sessionId) {
         String deviceFarm = System.getProperty("deviceFarm");
 
-        if(deviceFarm.equals("browserstack")) {
+        if ("browserstack".equals(deviceFarm)) {
             return Browserstack.videoUrl(sessionId);
-        } else if(deviceFarm.equals("selenoid")) {
+        } else if ("selenoid".equals(deviceFarm)) {
             return getSelenoidVideoUrl(sessionId);
         }
         return null;

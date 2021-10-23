@@ -1,6 +1,5 @@
-package helpers;
+package reporting;
 
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -11,9 +10,10 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static org.openqa.selenium.logging.LogType.BROWSER;
 
-public class Attach {
+public class AttachmentHelper {
+
+    private static final BrowserstackApiClient browserstackApiClient = new BrowserstackApiClient();
 
     @Attachment(value = "{attachName}", type = "text/plain")
     public static String attachAsText(String attachName, String message) {
@@ -41,14 +41,14 @@ public class Attach {
         String deviceFarm = System.getProperty("deviceFarm");
 
         if ("browserstack".equals(deviceFarm)) {
-            return Browserstack.videoUrl(sessionId);
+            return browserstackApiClient.videoUrl(sessionId);
         } else if ("selenoid".equals(deviceFarm)) {
             return getSelenoidVideoUrl(sessionId);
         }
         return null;
     }
 
-    public static String getSelenoidVideoUrl(String sessionId) {
+    private static String getSelenoidVideoUrl(String sessionId) {
         try {
             return new URL("https://selenoid.autotests.cloud/video/" + sessionId + ".mp4") + "";
         } catch (MalformedURLException e) {
@@ -61,10 +61,4 @@ public class Attach {
         return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
     }
 
-    public static void browserConsoleLogs() {
-        attachAsText(
-                "Browser console logs",
-                String.join("\n", Selenide.getWebDriverLogs(BROWSER))
-        );
-    }
 }

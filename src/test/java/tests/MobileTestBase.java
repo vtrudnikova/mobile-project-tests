@@ -2,8 +2,7 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import drivers.MobileDriverProvider;
-import drivers.SelenoidMobileDriver;
-import helpers.Attach;
+import reporting.AttachmentHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
-import static helpers.Attach.getSessionId;
+import static reporting.AttachmentHelper.getSessionId;
 
-public class MobileTestBase {
+abstract public class MobileTestBase {
 
     @BeforeAll
     public static void setup() {
@@ -35,12 +34,11 @@ public class MobileTestBase {
     public void afterEach() {
         String sessionId = getSessionId();
 
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-//        Attach.browserConsoleLogs();
+        AttachmentHelper.screenshotAs("Last screenshot");
+        AttachmentHelper.pageSource();
 
         closeWebDriver();
 
-        Attach.attachVideo(sessionId);
+        AttachmentHelper.attachVideo(sessionId);
     }
 }

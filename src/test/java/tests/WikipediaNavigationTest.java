@@ -7,9 +7,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.Allure.step;
 
-public class Tests extends MobileTestBase {
+public class WikipediaNavigationTest extends MobileTestBase {
+
     @Test
-    void checkContentTest() {
+    void navigateThroughSomePages() {
         step("Main content verification", () -> {
             $(MobileBy.id("org.wikipedia.alpha:id/primaryTextView"))
                     .shouldHave(text("The Free Encyclopedia …in over 300 languages"));

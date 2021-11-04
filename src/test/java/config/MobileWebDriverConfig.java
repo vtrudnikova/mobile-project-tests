@@ -12,4 +12,9 @@ public interface MobileWebDriverConfig extends Config {
     @Key("appium.url")
     String appiumUrl();
 
+    @Key("userName")
+    String userName();
+
+    @Key("password")
+    String password();
 }
